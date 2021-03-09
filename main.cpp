@@ -3,14 +3,67 @@
 //------------------------------
 #include <string>
 #include "catch.hpp"
+#include <iostream>
+#include "Complex.h"
 using Catch::Matchers::Equals;
 //------------------------------
 
 // Fix the following class
-class Complex {
-    void operator>>(std::string&) const;
-    void operator<<(const std::string&);
-};
+
+Complex::Complex(int x, int y)
+{
+  this->real = x;
+  this->imaginary = y;
+
+}
+
+int Complex::re()
+{
+ return this->real;
+}
+
+int Complex::im()
+{
+  return this->imaginary;
+}
+
+void Complex::operator>>(std::string& s) const
+{
+  s.append(std::to_string(this->real));
+  if(imaginary >= 0)
+      s.append("+");
+      s.append(std::to_string(this->imaginary));
+      s.append("i");
+
+}
+
+void Complex::operator<<(const std::string& s)
+{
+
+        if (s[0] == '-')
+        {
+                int re = s[1] - '0';
+                this->real = -1 * re;
+        }
+        else
+        {
+                this->real = s[0] - '0';
+        }
+
+        const char i = 'i';
+        int ipos = s.find(i);
+        int bpos = ipos - 1;
+        int bsignpos = ipos - 2;
+        if (s[bsignpos] == '-')
+        {
+           this->imaginary = -1 * (s[bpos] - '0');
+        }
+        else
+        {
+           this->imaginary = s[bpos] - '0';
+        }
+}
+
 
 //------------------------------
 //   DO NOT MODIFY TEST CASES
